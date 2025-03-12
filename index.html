@@ -6,10 +6,19 @@
   <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Stencil:opsz,wght@10..72,100..900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles/main.css">
   <script src="scripts/script.js" defer></script>
-  <title>Etch A Sketch</title>
+  <title>✎ Etch-a-Sketch</title>
 </head>
 <body>
-  <h1>Etch a Sketch</h1>
-  <div id="grid-container"></div>
+  <header>
+    <h1>Etch a Sketch</h1>
+  </header>
+  <main>
+    <div class="grid-settings">
+      <label for="grid-size">Grid Size: <span id="grid-size-value">16</span></label>
+      <input type="range" id="grid-size" value="16" min="1" max="64">
+    </div>
+    <div id="grid-container"></div>
+  </main>
+  <footer></footer>
 </body>
 </html>
