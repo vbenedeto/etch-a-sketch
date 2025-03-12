@@ -1,4 +1,5 @@
 let isMouseDown = false;
+let isEraserActive = false;
 
 const gridContainer = document.getElementById("grid-container");
 
@@ -17,12 +18,12 @@ createGrid(16);
 
 function handleMouseEvents(event) {
   if (event.type === "mousedown" && event.target.classList.contains("grid-square")) {
-    event.target.style.backgroundColor = "black";
+    event.target.style.backgroundColor = isEraserActive ? "#ebe6f3" : "black";
     isMouseDown = true;
   }
 
   if (event.type === "mousemove" && isMouseDown && event.target.classList.contains("grid-square")) {
-    event.target.style.backgroundColor = "black";
+    event.target.style.backgroundColor = isEraserActive ? "#ebe6f3" : "black";
   }
 
   if (event.type === "mouseup") {
@@ -53,3 +54,10 @@ function updateGrid(size) {
 
   createGrid(size);
 }
+
+const eraserBtn = document.getElementById("eraser-btn");
+
+eraserBtn.addEventListener("click", () => {
+  isEraserActive = !isEraserActive;
+  eraserBtn.classList.toggle("active", isEraserActive);
+})
