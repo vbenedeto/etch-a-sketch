@@ -87,7 +87,7 @@ button:hover {
   transform: scale(1.05);
 }
 
-#eraser-btn.active {
+.active {
   background-color: #211c32;
   color: #12f3c2;
   box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1); 
