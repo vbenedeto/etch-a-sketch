@@ -1,7 +1,6 @@
 let isMouseDown = false;
 
 const gridContainer = document.getElementById("grid-container");
-console.log();
 
 function createGrid(size) {
   const squaresCount = size * size;
@@ -34,3 +33,23 @@ function handleMouseEvents(event) {
 gridContainer.addEventListener("mousedown", handleMouseEvents);
 gridContainer.addEventListener("mousemove", handleMouseEvents);
 document.addEventListener("mouseup", handleMouseEvents);
+
+const gridSizeInput = document.getElementById("grid-size");
+const gridSizeValue = document.getElementById("grid-size-value");
+
+gridSizeInput.addEventListener("input", () => {
+  const newSize =  gridSizeInput.value;
+  gridSizeValue.textContent = `${newSize}x${newSize}`;
+  updateGrid(newSize);
+})
+
+function updateGrid(size) {
+  if (size < 1 || size > 100) {
+    alert("Grid size must be between 1 and 100.")
+    return;
+  }
+
+  gridContainer.innerHTML = "";
+
+  createGrid(size);
+}
