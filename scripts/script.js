@@ -68,6 +68,9 @@ function applyColor(square) {
     case "eraser":
       square.style.backgroundColor = "#ebe6f3";
       break;
+    case "rainbow":
+      square.style.backgroundColor = getRandomColor();
+      break;
     default:
       square.style.backgroundColor = "#ebe6f3";
   }
@@ -89,5 +92,11 @@ function handleMouseEvents(event) {
   }
 }
 
+function getRandomColor() {
+  const r =  Math.floor(Math.random() * 256);
+  const g =  Math.floor(Math.random() * 256);
+  const b =  Math.floor(Math.random() * 256);
+  return `rgb(${r}, ${g}, ${b})`;
+}
 
 
