@@ -1,10 +1,29 @@
 let isMouseDown = false;
-// let isEraserBtnActive = false;
-// let isColorBtnActive = true;
+let activeMode = "color";
 
 const gridContainer = document.getElementById("grid-container");
+const gridSizeInput = document.getElementById("grid-size");
+const gridSizeValue = document.getElementById("grid-size-value");
+const colorPicker =  document.getElementById("color-picker").value;
+const buttons = document.querySelectorAll("button[data-mode]");
 
+//Event Listeners Setup
+gridContainer.addEventListener("mousedown", handleMouseEvents);
+gridContainer.addEventListener("mousemove", handleMouseEvents);
+document.addEventListener("mouseup", handleMouseEvents);
+
+gridSizeInput.addEventListener("input", () => {
+  const newSize =  gridSizeInput.value;
+  gridSizeValue.textContent = `${newSize}x${newSize}`;
+  updateGrid(newSize);
+});
+
+buttons.forEach(button => button.addEventListener("click", changeMode));
+
+// Grid Functions
 function createGrid(size) {
+  gridContainer.innerHTML = ""
+
   const squaresCount = size * size;
   const squareSize = 500 / size;
   for (let i = 0; i < squaresCount; i++) {
@@ -15,21 +34,6 @@ function createGrid(size) {
   }
 }
 
-createGrid(16);
-
-gridContainer.addEventListener("mousedown", handleMouseEvents);
-gridContainer.addEventListener("mousemove", handleMouseEvents);
-document.addEventListener("mouseup", handleMouseEvents);
-
-const gridSizeInput = document.getElementById("grid-size");
-const gridSizeValue = document.getElementById("grid-size-value");
-
-gridSizeInput.addEventListener("input", () => {
-  const newSize =  gridSizeInput.value;
-  gridSizeValue.textContent = `${newSize}x${newSize}`;
-  updateGrid(newSize);
-});
-
 function updateGrid(size) {
   if (size < 1 || size > 100) {
     alert("Grid size must be between 1 and 100.")
@@ -39,31 +43,21 @@ function updateGrid(size) {
   createGrid(size);
 }
 
-const buttons = document.querySelectorAll("button[data-mode]");
-let activeMode = "color";
-
-document.querySelector(`button[data-mode="${activeMode}"]`).classList.add("active");
-
-buttons.forEach(button => {
-  button.addEventListener("click", () => {
-    const mode = button.getAttribute("data-mode");
-
-    // Only update if the clicked button is not already active
-    if (activeMode !== mode) {
-      document.querySelector(`button[data-mode="${activeMode}"]`).classList.remove("active");
-      // Activate the clicked button
-      button.classList.add("active");
-      // Update the active mode
-      activeMode = mode;
-    }
-  })
-})
-
+// Mode & Color Functions
+function changeMode(event) {
+  const mode = event.target.getAttribute("data-mode");
+  
+  if (activeMode !== mode) {
+    document.querySelector(`button[data-mode="${activeMode}"]`).classList.remove("active");
+    event.target.classList.add("active");
+    activeMode = mode;
+  }
+}
 
 function applyColor(square) {
   switch (activeMode) {
     case "color":
-      square.style.backgroundColor = "black";
+      square.style.backgroundColor = getCustomColor();
       break;
     case "eraser":
       square.style.backgroundColor = "#ebe6f3";
@@ -76,7 +70,7 @@ function applyColor(square) {
   }
 }
 
-// Handle mouse events based on the active mode
+// Mouse Event Handdling
 function handleMouseEvents(event) {
   if (event.type === "mousedown" && event.target.classList.contains("grid-square")) {
     applyColor(event.target);
@@ -92,6 +86,7 @@ function handleMouseEvents(event) {
   }
 }
 
+// Helper Functions
 function getRandomColor() {
   const r =  Math.floor(Math.random() * 256);
   const g =  Math.floor(Math.random() * 256);
@@ -99,4 +94,10 @@ function getRandomColor() {
   return `rgb(${r}, ${g}, ${b})`;
 }
 
+function getCustomColor() {
+  return colorPicker.value;
+}
 
+// Initialize Grid on Page Load
+createGrid(16);
+document.querySelector(`button[data-mode="${activeMode}"]`).classList.add("active");
