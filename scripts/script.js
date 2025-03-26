@@ -4,7 +4,7 @@ let activeMode = "color";
 const gridContainer = document.getElementById("grid-container");
 const gridSizeInput = document.getElementById("grid-size");
 const gridSizeValue = document.getElementById("grid-size-value");
-const colorPicker =  document.getElementById("color-picker").value;
+const colorPicker =  document.getElementById("color-picker");
 const buttons = document.querySelectorAll("button[data-mode]");
 
 //Event Listeners Setup
