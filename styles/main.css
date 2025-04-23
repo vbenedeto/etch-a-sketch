@@ -5,6 +5,8 @@
 }
 
 body {
+  display: flex;
+  flex-direction: column;
   font-family: 'Big Shoulders Stencil', sans-serif;
   height: 100vh;
   margin: 0;
@@ -26,10 +28,10 @@ main {
   gap: 100px;
   margin: 0 auto;
   max-width: 1100px;
+  flex: 1;
 }
 
 footer {
-  position: absolute;
   bottom: 0;
   left: 0;
   display: flex;
@@ -39,6 +41,7 @@ footer {
   width: 100%;
   padding: 10px;
   font-size: 20px;
+  padding: 40px 0px 29px 0px;
 }
 
 img {
@@ -49,11 +52,16 @@ img {
 }
 
 #grid-container {
+  position: relative;
   display: flex;
   flex-wrap: wrap;
   width: 500px;
   height: 500px;
   background-color: var(--secondary-color);
+  border: 4px double #00f5d4;
+  outline: 2px solid #2ec4b6;
+  border-radius: 0.5rem;
+  box-shadow: 0 0 8px #2ec4b6;
 }
 
 .grid-settings {
