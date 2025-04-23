@@ -12,6 +12,18 @@ gridContainer.addEventListener("mousedown", handleMouseEvents);
 gridContainer.addEventListener("mousemove", handleMouseEvents);
 document.addEventListener("mouseup", handleMouseEvents);
 
+colorPicker.addEventListener("mousedown", () => {
+  //Switch to Custom Color mode if not already active
+  if (activeMode !== "color") {
+    document.querySelector(`button[data-mode="${activeMode}"]`).classList.remove("active");
+
+    //Add the active class to the Custom Color button
+    document.querySelector(`button[data-mode="color"]`).classList.add("active");
+
+    activeMode = "color";
+  }
+});
+
 gridSizeInput.addEventListener("input", () => {
   const newSize =  gridSizeInput.value;
   gridSizeValue.textContent = `${newSize}x${newSize}`;
@@ -20,9 +32,27 @@ gridSizeInput.addEventListener("input", () => {
 
 buttons.forEach(button => button.addEventListener("click", changeMode));
 
+// Initial instructions setup
+function addInitialInstructions() {
+  const instructions = document.createElement("p");
+  instructions.id = "instructions";
+  instructions.innerHTML = `Click anywhere inside this grid to start drawing ✏️<br>Click in the colored ball to choose your color 🎨<br>Change the grid size by sliding the range!<br>Switch modes with the buttons:<br>🌈 Rainbow - random colors!<br>🧽 Eraser - remove color!`;
+  instructions.style.cssText = `
+    position: absolute;
+    color: var(--bg-color);
+    text-align: center;
+    top: 15%;
+    width: 100%;
+    font-size: 1.6rem;
+    pointer-events: none;
+    line-height: 48px;
+  `
+  gridContainer.appendChild(instructions);
+}
+
 // Grid Functions
 function createGrid(size) {
-  gridContainer.innerHTML = ""
+  gridContainer.innerHTML = "";
 
   const squaresCount = size * size;
   const squareSize = 500 / size;
@@ -73,6 +103,10 @@ function applyColor(square) {
 // Mouse Event Handdling
 function handleMouseEvents(event) {
   if (event.type === "mousedown" && event.target.classList.contains("grid-square")) {
+    const instructions = document.getElementById("instructions");
+    if (instructions) {
+      instructions.remove();
+    }
     applyColor(event.target);
     isMouseDown = true;
   }
@@ -100,4 +134,5 @@ function getCustomColor() {
 
 // Initialize Grid on Page Load
 createGrid(16);
+addInitialInstructions();
 document.querySelector(`button[data-mode="${activeMode}"]`).classList.add("active");
